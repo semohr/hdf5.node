@@ -367,7 +367,7 @@ namespace NodeHDF5 {
     Methods*    group = ObjectWrap::Unwrap<Methods>(args.This());
     std::string name(*dset_name);
     H5O_info_t  object_info;
-    herr_t      err = H5Oget_info_by_name(group->id, *dset_name, &object_info, H5P_DEFAULT);
+    herr_t      err = H5Oget_info_by_name(group->id, *dset_name, &object_info, H5O_INFO_ALL, H5P_DEFAULT);
     if (err < 0) {
       v8::Isolate::GetCurrent()->ThrowException(
           v8::Exception::Error(v8::String::NewFromUtf8(v8::Isolate::GetCurrent(), "failed to get attr info", v8::NewStringType::kInternalized).ToLocalChecked()));
@@ -711,8 +711,8 @@ namespace NodeHDF5 {
     // unwrap group
     Methods*    group = ObjectWrap::Unwrap<Methods>(args.This());
     std::string name(*dset_name);
-    H5O_info_t  object_info;
-    herr_t      err = H5Oget_info_by_name(group->id, *dset_name, &object_info, H5P_DEFAULT);
+    H5O_info2_t  object_info;
+    herr_t      err = H5Oget_info_by_name(group->id, *dset_name, &object_info, H5O_INFO_ALL, H5P_DEFAULT);
     if (err < 0) {
       v8::Isolate::GetCurrent()->ThrowException(
           v8::Exception::Error(v8::String::NewFromUtf8(v8::Isolate::GetCurrent(), "failed to get attr info", v8::NewStringType::kInternalized).ToLocalChecked()));
@@ -1052,7 +1052,7 @@ namespace NodeHDF5 {
   int Methods::getNumAttrs() {
     H5O_info_t oinfo; /* Object info */
 
-    H5Oget_info(id, &oinfo);
+    H5Oget_info(id, &oinfo, H5O_INFO_ALL);
     return ((int)oinfo.num_attrs);
   }
 
@@ -1067,7 +1067,7 @@ namespace NodeHDF5 {
     H5O_info_t objinfo;
 
     // Use C API to get information of the object
-    herr_t ret_value = H5Oget_info_by_name(id, objname, &objinfo, H5P_DEFAULT);
+    herr_t ret_value = H5Oget_info_by_name(id, objname, &objinfo, H5O_INFO_ALL, H5P_DEFAULT);
 
     if (ret_value < 0) {
       // Return a valid type or throw an exception for unknown type
