@@ -21,6 +21,11 @@ dependent projects.
 ```bash
 npm install hdf5 --hdf5_home_linux=<your native hdf path>
 ```
+If using a native path. make sure that the hdf5 libraries are added to your path.
+```bash
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<your native hdf path>/lib
+```
+
 For mac and windows the switches are --hdf5_home_mac & --hdf5_home_win
 
 To install with yarn first need to configure so it knows where the libraries are:
